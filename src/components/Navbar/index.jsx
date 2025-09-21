@@ -1,10 +1,16 @@
+import { useNavigate } from "react-router-dom"
+
+
+
 export const Navbar = () => {
+
+  const navigate = useNavigate();
+
   return (
     <header className="flex items-center justify-between bg-green-900 px-8 py-3 text-slate-50">
-      {/* Left side - Logo */}
-      <h1 className="text-3xl font-bold">Shop It</h1>
-
-      {/* Right side - Icons */}
+      <div>
+        <h1 onClick={() => navigate("/")} className="text-5xl font-bold">Shop It</h1>
+      </div>
       <nav className="flex items-center gap-8">
         <span className="material-symbols-outlined text-3xl cursor-pointer hover:text-slate-200">
           favorite

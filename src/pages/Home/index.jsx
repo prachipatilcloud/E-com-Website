@@ -2,10 +2,12 @@ import { Navbar } from "../../components/Navbar"
 import { useEffect, useState } from "react"
 import { getAllProducts } from "../../api/getAllProducts"
 import { ProductCard } from "../../components/ProductCard";
+import { useCart } from "../../context/cart-context";
 
 export const Home = () => {
 
     const [products, setProducts] = useState([]);
+    const {cart} = useCart();
 
     useEffect(() => {
 
