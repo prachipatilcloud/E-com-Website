@@ -1,4 +1,16 @@
+import { useCart } from "../../context/cart-context"
+
 export const HorizontalProductCard = ({product}) => {
+
+    const { cartDispatch } = useCart();
+
+    const onRemoveClick = (product) => {
+        cartDispatch({
+            type: "REMOVE_FROM_CART",
+            payload: { id: product.id }
+        })
+    }
+
     return (
         <div className="card-horizontal d-flex shadow">
             <div className="card-hori-image-container relative">
@@ -19,7 +31,9 @@ export const HorizontalProductCard = ({product}) => {
                 </div>
                 <div className="cta-btn d-flex gap">
                     <div className="cta-btn">
-                        <button className="button hori-btn btn-primary btn-icon d-flex align-center justify-center gap cursor btn-margin"><img src="/assets/cart-white.png" alt="cart" /> Remove From Cart</button>
+                        <button 
+                        onClick={() => onRemoveClick(product)}
+                         className="button hori-btn btn-primary btn-icon d-flex align-center justify-center gap cursor btn-margin"><img src="/assets/cart-white.png" alt="cart" /> Remove From Cart</button>
                     </div>
                     <div className="cta-btn">
                         <button className="button hori-btn btn-outline-primary btn-icon d-flex align-center justify-center gap cursor btn-margin">

@@ -1,13 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import { useCart } from "../../context/cart-context"
+import { useWishlist } from "../../context/wishlist-context"
 import { findProductInCart } from "../../utils/findProductInCart";
+import { findProductInWishlist } from "../../utils/findProductInWishlist";
 
 export const ProductCard = ({ product }) => {
-    const { cartState, cartDispatch } = useCart();
+    const { cart, cartDispatch } = useCart();
+    const { wishlist, wishlistDispatch } = useWishlist();
 
     const navigate = useNavigate();
 
-    const isProductInCart = findProductInCart(cartState, product.id);
+    const isProductInCart = findProductInCart(cart, product.id);
+    const isProductInWishlist = findProductInWishlist(wishlist, product.id);
 
     const onCartClick = (product) => {
         !isProductInCart
@@ -16,6 +20,15 @@ export const ProductCard = ({ product }) => {
                 payload: { product }
             })
             : navigate("/cart");
+    }
+
+    const onWishlistClick = (product) => {
+        !isProductInWishlist
+            ? wishlistDispatch({
+                type: "ADD_TO_WISHLIST",
+                payload: { product }
+            })
+            : navigate("/wishlist");
     }
 
     return (
@@ -29,9 +42,14 @@ export const ProductCard = ({ product }) => {
                     <p className="card-price">Rs. {product.price}</p>
                 </div>
                 <div className="cta-btn">
-                    <button className="button btn-primary btn-icon cart-btn d-flex align-center justify-center gap cursor btn-margin">
-                        <span className="material-symbols-outlined">favorite</span>
-                        Add To Wishlist
+                    <button
+                        onClick={() => onWishlistClick(product)}
+                        className="button btn-primary btn-icon cart-btn d-flex align-center justify-center gap cursor btn-margin"
+                    >
+                        <span className="material-symbols-outlined">
+                            {isProductInWishlist ? "favorite" : "favorite_border"}
+                        </span>
+                        {isProductInWishlist ? "Go to Wishlist" : "Add To Wishlist"}
                     </button>
                     <button
                         onClick={() => onCartClick(product)}
